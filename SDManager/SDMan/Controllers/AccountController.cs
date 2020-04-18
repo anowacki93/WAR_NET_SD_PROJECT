@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SDMan.Models;
 using SDMan.ViewModel;
 //using SDMan.ViewModels;
@@ -14,37 +15,44 @@ namespace PlanFood.Mvc.Context
     {
         private readonly SignInManager<UserModel> signInManager;
         private readonly UserManager<UserModel> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RoleManager<IdentityRole<int>> roleManager;
         //private readonly UserModel userModel;
+
+
         public AccountController(SignInManager<UserModel> _signInManager,
-            UserManager<UserModel> _userManager,RoleManager<IdentityRole> _roleManager)
+            UserManager<UserModel> _userManager,RoleManager<IdentityRole<int>> _roleManager)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
-        }
 
+
+
+        }
+       
         public IActionResult Index()
         {
+
             return View();
         }
 
         public IActionResult Register()
         {
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            IdentityRole identity = new IdentityRole
+            IdentityRole<int> identity = new IdentityRole<int>
             {
                 Name = "Administrator"
             };
             await roleManager.CreateAsync(identity);
             var admin = new UserModel { UserName = "Administrator" };
 
-            var adminresult = await userManager.CreateAsync(admin, "Administrator");
+            await userManager.CreateAsync(admin, "Administrator");
             await userManager.AddToRoleAsync(admin, "Administrator");
 
             if (ModelState.IsValid)
@@ -117,14 +125,24 @@ namespace PlanFood.Mvc.Context
         {
             if (ModelState.IsValid)
             {
-                IdentityRole identity = new IdentityRole
+                IdentityRole<int> identity = new IdentityRole<int>
                 {
                     Name = createRoleViewModel.RoleName
                 };
                 IdentityResult result = await roleManager.CreateAsync(identity);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index","Home");
+                }
             }
             
             return View();
+        }
+        [HttpGet]
+        public IActionResult ListRoles()
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
         }
 
         //public IActionResult ChangePwd()

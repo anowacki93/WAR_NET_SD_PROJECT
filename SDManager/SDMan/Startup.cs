@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SDMan.Context;
 using SDMan.Models;
+using SDMan.Services;
+using SDMan.Services.Interfaces;
 
 namespace SDMan
 {
@@ -22,6 +24,9 @@ namespace SDMan
 
         public Startup()
         {
+            
+
+
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddXmlFile("appsettings.xml");
             Configuration = configurationBuilder.Build();
@@ -35,11 +40,17 @@ namespace SDMan
 
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SDManDbContext>();
 
-            services.AddIdentity<UserModel, IdentityRole>().AddEntityFrameworkStores<SDManDbContext>();
-            
+            services.AddIdentity<UserModel, IdentityRole<int>>().AddEntityFrameworkStores<SDManDbContext>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IPriorityService, PriorityService>();
+            services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<IIncidentService, IncidentService>();
 
             services.AddMvc();
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

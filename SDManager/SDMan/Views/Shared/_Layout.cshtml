@@ -22,7 +22,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Group" asp-action="Index">Group</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Priority" asp-action="Index">Priority</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">Incidents</a>
                         </li>
                     </ul>
                 </div>
@@ -46,3 +61,18 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+@*<h1>CommApp</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <div>Użytkownik Zalogowany.</div>
+
+    <a asp-controller="Account" asp-action="LogOut">Wyloguj</a>
+    <a asp-controller="Channel" asp-action="Index">Kanały</a>
+}
+else
+{
+    <div>Użytkownik Niezalogowany.</div>
+    <a asp-controller="Account" asp-action="Register">Rejestracja</a>
+    <a asp-controller="Account" asp-action="LogIn">Zaloguj</a>
+}*@

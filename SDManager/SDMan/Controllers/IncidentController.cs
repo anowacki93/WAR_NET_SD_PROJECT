@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using SDMan.Context;
+using SDMan.Models;
+using SDMan.Services.Interfaces;
+
+namespace SDMan.Controllers
+{
+    public class IncidentController : Controller
+    {
+        private readonly SignInManager<UserModel> signInManager;
+        private readonly IIncidentService _modelService;
+        public IncidentController(IIncidentService modelService)
+        {
+            _modelService = modelService;
+        }
+        public IActionResult Index()
+        {   //Po utworzeniu userów
+            //var user = User.Identity.Name;
+            //var modelData = _modelService.GetAll().Where(x => x.UserId == user);
+            //Przed utworzeniem userow
+            var modelData = _modelService.GetAll();
+            return View(modelData);
+        }
+        public IActionResult Create()
+        {
+            IncidentModel model = new IncidentModel();
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm]IncidentModel model) //[FromForm] - potrzebne do mapowania danych z formularza na obiekt w przypadku gdy korzystamy z Razora lub zwykłego HTMLa. Przy taghelperach nie jest to konieczne tak jak w tym przypadku
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await signInManager.UserManager.FindByIdAsync(User.Identity.ToString());
+                    model.CreatedBy = model.ModifiedBy = user;
+                    //model.UserId = User.Identity.Name;
+                    
+                    model.ListPriorites = new SelectList(_modelService.GetAll());
+                    _modelService.Create(model);
+                    //context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return View(model);
+                }
+                return Redirect("Index");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+        public IActionResult Remove(int id)
+        {
+            return View(_modelService.Get(id));
+        }
+        [HttpPost]
+        public IActionResult RemoveConfirm(int id)
+        {
+            try
+            {
+                _modelService.Delete(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.InnerException);
+                throw;
+            }
+            return Redirect("Index");
+        }
+        public IActionResult Edit(int id)
+        {
+            return View(_modelService.Get(id));
+        }
+        [HttpPost]
+        public IActionResult EditSave(IncidentModel model)
+        {
+            try
+            {
+
+                _modelService.Update(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.InnerException);
+                throw;
+            }
+            return Redirect("Index");
+        }
+        public IActionResult Details(int id)
+        {
+            return View(_modelService.Get(id));
+        }
+        public IActionResult Show()
+        {
+            var modelData = _modelService.GetAll();
+            return View(modelData.Count());
+        }
+    }
+}
