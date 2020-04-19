@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SDMan.Context;
 using SDMan.Models;
 using SDMan.Services.Interfaces;
@@ -19,15 +20,16 @@ namespace SDMan.Services
         }
         public bool Create(IncidentModel incidentModel)
         {
-            
-            incidentModel.LastModified = DateTime.UtcNow.AddHours(1);
-            incidentModel.CreatedDate = DateTime.UtcNow.AddHours(1);
-            incidentModel.Status = _context.Statuses.FirstOrDefault();
-            incidentModel.StatusId = incidentModel.Status.Id;
+            //incidentModel.ListPriorites = new SelectList(_context.Priorities.ToList());
+            incidentModel.LastModified = DateTime.UtcNow.AddHours(2);
+            incidentModel.CreatedDate = DateTime.UtcNow.AddHours(2);
+            incidentModel.Status = _context.Statuses.Where(x=>x.Id==1).FirstOrDefault();
+            incidentModel.StatusName = incidentModel.Status.Name;
+            incidentModel.Category = _context.Categories.Where(x => x.Name == incidentModel.CategoryName).FirstOrDefault();
+            incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
+            incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
             _context.Add(incidentModel);
-            
             _context.Incidents.Add(incidentModel);
-
             return _context.SaveChanges() > 0;
         }
 

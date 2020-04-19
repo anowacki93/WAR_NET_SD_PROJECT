@@ -10,8 +10,8 @@ using SDMan.Context;
 namespace SDMan.Migrations
 {
     [DbContext(typeof(SDManDbContext))]
-    [Migration("20200418114458_initial")]
-    partial class initial
+    [Migration("20200419083557_initial1")]
+    partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,7 +177,7 @@ namespace SDMan.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -192,7 +192,7 @@ namespace SDMan.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DepartmentName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -207,7 +207,7 @@ namespace SDMan.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("GroupName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -225,8 +225,11 @@ namespace SDMan.Migrations
                     b.Property<int?>("AssigneeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
@@ -234,8 +237,11 @@ namespace SDMan.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("DepartmentName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IncidentDescription")
                         .HasColumnType("nvarchar(max)");
@@ -246,11 +252,17 @@ namespace SDMan.Migrations
                     b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
-                    b.Property<int>("PriorityId")
+                    b.Property<int?>("PriorityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusId")
+                    b.Property<string>("PriorityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("StatusName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -296,7 +308,7 @@ namespace SDMan.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("StatusName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -452,9 +464,7 @@ namespace SDMan.Migrations
 
                     b.HasOne("SDMan.Models.CategoryModel", "Category")
                         .WithMany("Incidents")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("SDMan.Models.UserModel", "CreatedBy")
                         .WithMany()
@@ -462,9 +472,7 @@ namespace SDMan.Migrations
 
                     b.HasOne("SDMan.Models.DepartmentModel", "Department")
                         .WithMany("Incidents")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("SDMan.Models.UserModel", "ModifiedBy")
                         .WithMany()
@@ -472,15 +480,11 @@ namespace SDMan.Migrations
 
                     b.HasOne("SDMan.Models.PriorityModel", "Priority")
                         .WithMany()
-                        .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PriorityId");
 
                     b.HasOne("SDMan.Models.StatusModel", "Status")
                         .WithMany("Incidents")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatusId");
                 });
 
             modelBuilder.Entity("SDMan.Models.UserModel", b =>

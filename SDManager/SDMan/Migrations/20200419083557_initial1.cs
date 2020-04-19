@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SDMan.Migrations
 {
-    public partial class initial : Migration
+    public partial class initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace SDMan.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,7 +41,7 @@ namespace SDMan.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DepartmentName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,7 +54,7 @@ namespace SDMan.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace SDMan.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StatusName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -259,15 +259,19 @@ namespace SDMan.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IncidentDescription = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
-                    DepartmentId = table.Column<int>(nullable: false),
-                    StatusId = table.Column<int>(nullable: false),
+                    CategoryName = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: true),
+                    DepartmentName = table.Column<string>(nullable: true),
+                    DepartmentId = table.Column<int>(nullable: true),
+                    StatusName = table.Column<string>(nullable: true),
+                    StatusId = table.Column<int>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false),
                     AssigneeId = table.Column<int>(nullable: true),
                     CreatedById = table.Column<int>(nullable: true),
                     ModifiedById = table.Column<int>(nullable: true),
-                    PriorityId = table.Column<int>(nullable: false)
+                    PriorityName = table.Column<string>(nullable: true),
+                    PriorityId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,7 +287,7 @@ namespace SDMan.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Incidents_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
@@ -295,7 +299,7 @@ namespace SDMan.Migrations
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Incidents_AspNetUsers_ModifiedById",
                         column: x => x.ModifiedById,
@@ -307,13 +311,13 @@ namespace SDMan.Migrations
                         column: x => x.PriorityId,
                         principalTable: "Priorities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Incidents_Statuses_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

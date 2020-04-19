@@ -16,8 +16,15 @@ namespace SDMan.Controllers
     {
         private readonly SignInManager<UserModel> signInManager;
         private readonly IIncidentService _modelService;
-        public IncidentController(IIncidentService modelService)
+        private readonly IPriorityService _priorityService;
+        private readonly ICategoryService _categoryService;
+        private readonly IDepartmentService _departmentService;
+        private readonly SDManDbContext _context;
+        public IncidentController(IIncidentService modelService, IDepartmentService departmentService, ICategoryService categoryService, IPriorityService priorityService)
         {
+            _priorityService = priorityService;
+            _categoryService = categoryService;
+            _departmentService = departmentService;
             _modelService = modelService;
         }
         public IActionResult Index()
@@ -31,8 +38,15 @@ namespace SDMan.Controllers
         public IActionResult Create()
         {
             IncidentModel model = new IncidentModel();
+            //model.ListPriorites = new SelectList(_modelService.GetAll(), model.Priority);
+            //model.ListPriorites = new SelectList(_modelService.GetAll().ToList());
+            model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
+            model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
+            model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
+            //model.ListPriorities = _priorityService.GetAll().ToList();
             return View(model);
         }
+      
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]IncidentModel model) //[FromForm] - potrzebne do mapowania danych z formularza na obiekt w przypadku gdy korzystamy z Razora lub zwykłego HTMLa. Przy taghelperach nie jest to konieczne tak jak w tym przypadku
         {
@@ -40,11 +54,12 @@ namespace SDMan.Controllers
             {
                 try
                 {
-                    var user = await signInManager.UserManager.FindByIdAsync(User.Identity.ToString());
-                    model.CreatedBy = model.ModifiedBy = user;
+                    //var user = await signInManager.UserManager.FindByIdAsync(User.Identity.ToString());
+                    //model.CreatedBy = model.ModifiedBy = user;
                     //model.UserId = User.Identity.Name;
+
+                    // model.ListPriorites = new SelectList(_modelService.GetAll());
                     
-                    model.ListPriorites = new SelectList(_modelService.GetAll());
                     _modelService.Create(model);
                     //context.SaveChanges();
                 }
@@ -78,8 +93,9 @@ namespace SDMan.Controllers
             }
             return Redirect("Index");
         }
-        public IActionResult Edit(int id)
+        public IActionResult Edit(IncidentModel model,int id)
         {
+
             return View(_modelService.Get(id));
         }
         [HttpPost]

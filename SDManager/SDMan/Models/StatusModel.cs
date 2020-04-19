@@ -8,7 +8,7 @@ namespace SDMan.Models
     public class StatusModel
     {
         public int Id { get; set; }
-        public string StatusName { get; set; }
+        public string Name { get; set; }
         public ICollection<IncidentModel> Incidents { get; set; }
     }
 }
