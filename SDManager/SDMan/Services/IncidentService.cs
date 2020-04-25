@@ -45,6 +45,21 @@ namespace SDMan.Services
 
         public bool Update(IncidentModel model)
         {
+            var editmodel = _context.Incidents.Where(x => x.Id == model.Id).FirstOrDefault();
+            model.IncidentDescription = editmodel.IncidentDescription;
+            model.LastModified = editmodel.LastModified;
+            model.ListCategories = editmodel.ListCategories;
+            model.ListDepartments = editmodel.ListDepartments;
+            model.ListPriorities = editmodel.ListPriorities;
+            model.ModifiedBy = editmodel.ModifiedBy;
+            model.Priority = editmodel.Priority;
+            model.PriorityName = editmodel.PriorityName;
+            model.Status = editmodel.Status;
+            model.StatusName = editmodel.StatusName;
+            model.Title = editmodel.Title;
+             
+            
+
             _context.Incidents.Update(model);
             return _context.SaveChanges() > 0;
         }

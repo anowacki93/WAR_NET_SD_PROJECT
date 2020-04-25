@@ -14,18 +14,19 @@ namespace SDMan.Controllers
 {
     public class IncidentController : Controller
     {
-        private readonly SignInManager<UserModel> signInManager;
+        //private readonly SignInManager<UserModel> signInManager;
         private readonly IIncidentService _modelService;
         private readonly IPriorityService _priorityService;
         private readonly ICategoryService _categoryService;
         private readonly IDepartmentService _departmentService;
         private readonly SDManDbContext _context;
-        public IncidentController(IIncidentService modelService, IDepartmentService departmentService, ICategoryService categoryService, IPriorityService priorityService)
+        public IncidentController(IIncidentService modelService, IDepartmentService departmentService, ICategoryService categoryService, IPriorityService priorityService, SDManDbContext context)
         {
             _priorityService = priorityService;
             _categoryService = categoryService;
             _departmentService = departmentService;
             _modelService = modelService;
+            _context = context;
         }
         public IActionResult Index()
         {   //Po utworzeniu userów
@@ -40,10 +41,11 @@ namespace SDMan.Controllers
             IncidentModel model = new IncidentModel();
             //model.ListPriorites = new SelectList(_modelService.GetAll(), model.Priority);
             //model.ListPriorites = new SelectList(_modelService.GetAll().ToList());
-            model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
-            model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
-            model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
+            //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
+            //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
+            //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
             //model.ListPriorities = _priorityService.GetAll().ToList();
+            //model.ListCategories = _context.Categories.ToList();
             return View(model);
         }
       
@@ -95,7 +97,10 @@ namespace SDMan.Controllers
         }
         public IActionResult Edit(IncidentModel model,int id)
         {
-
+            
+            //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
+            //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
+            //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
             return View(_modelService.Get(id));
         }
         [HttpPost]
@@ -116,12 +121,26 @@ namespace SDMan.Controllers
         }
         public IActionResult Details(int id)
         {
+            //IncidentModel model = new IncidentModel();
+            //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
+            //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
+            //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
             return View(_modelService.Get(id));
         }
         public IActionResult Show()
         {
             var modelData = _modelService.GetAll();
             return View(modelData.Count());
+        }
+        [HttpPost]
+        public JsonResult CreateJS(string prefix)
+        {
+            var List = _categoryService.GetAll();
+            var CatList = (from N in List
+                            where N.Name.StartsWith(prefix)
+                            select new { N.Name });
+            return new JsonResult(CatList);
+            
         }
     }
 }

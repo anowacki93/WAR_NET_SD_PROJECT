@@ -33,7 +33,7 @@ namespace SDMan.Models
         public SelectList? ListPriorities { get; set; }
         [NotMapped]
 
-        public SelectList? ListCategories { get; set; }
+        public List<CategoryModel> ListCategories { get; set; }
         [NotMapped]
 
         public SelectList? ListDepartments { get; set; }
