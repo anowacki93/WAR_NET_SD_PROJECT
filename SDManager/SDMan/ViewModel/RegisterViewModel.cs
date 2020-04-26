@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SDMan.ViewModel
 {
@@ -19,7 +21,10 @@ namespace SDMan.ViewModel
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        
-        
+        public string Groupname { get; set; }
+        [NotMapped]
+        public SelectList? ListGroup { get; set; }
+
+
     }
 }

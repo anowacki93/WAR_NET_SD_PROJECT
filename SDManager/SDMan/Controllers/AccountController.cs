@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SDMan.Context;
 using SDMan.Models;
 using SDMan.ViewModel;
 //using SDMan.ViewModels;
@@ -16,15 +18,17 @@ namespace PlanFood.Mvc.Context
         private readonly SignInManager<UserModel> signInManager;
         private readonly UserManager<UserModel> userManager;
         private readonly RoleManager<IdentityRole<int>> roleManager;
+        private readonly SDManDbContext _context;
         //private readonly UserModel userModel;
 
 
         public AccountController(SignInManager<UserModel> _signInManager,
-            UserManager<UserModel> _userManager,RoleManager<IdentityRole<int>> _roleManager)
+            UserManager<UserModel> _userManager,RoleManager<IdentityRole<int>> _roleManager, SDManDbContext context)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
+            _context = context;
 
 
 
@@ -38,22 +42,23 @@ namespace PlanFood.Mvc.Context
 
         public IActionResult Register()
         {
-
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            model.ListGroup = new SelectList(_context.Groups.Select(x => x.Name).ToList(),model.Groupname);
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            IdentityRole<int> identity = new IdentityRole<int>
-            {
-                Name = "Administrator"
-            };
-            await roleManager.CreateAsync(identity);
-            var admin = new UserModel { UserName = "Administrator" };
+            //IdentityRole<int> identity = new IdentityRole<int>
+            //{
+            //    Name = "Administrator"
+            //};
+            //await roleManager.CreateAsync(identity);
+            //var admin = new UserModel { UserName = "Administrator" };
 
-            await userManager.CreateAsync(admin, "Administrator");
-            await userManager.AddToRoleAsync(admin, "Administrator");
+            //await userManager.CreateAsync(admin, "Administrator");
+            //await userManager.AddToRoleAsync(admin, "Administrator");
 
             if (ModelState.IsValid)
             {
@@ -65,16 +70,9 @@ namespace PlanFood.Mvc.Context
                 
                 if (result.Succeeded)
                 {
-                    var login = await signInManager.PasswordSignInAsync(viewModel.Email,
-                                        viewModel.Password, true, false);
-                    if (login.Succeeded)
-                    {
+                    
                         return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Nie można się zalogować!");
-                    }
+                   
                 }
                 foreach (var error in result.Errors)
                 {
@@ -99,6 +97,7 @@ namespace PlanFood.Mvc.Context
                                         viewModel.Password, true, false);
                 if (result.Succeeded)
                 {
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -139,10 +138,11 @@ namespace PlanFood.Mvc.Context
             return View();
         }
         [HttpGet]
-        public IActionResult ListRoles()
+        public IActionResult AssignRole()
         {
-            var roles = roleManager.Roles;
-            return View(roles);
+            CreateRoleViewModel model = new CreateRoleViewModel();
+            model.ListRoles = roleManager.Roles.ToList();
+            return View(model);
         }
 
         //public IActionResult ChangePwd()

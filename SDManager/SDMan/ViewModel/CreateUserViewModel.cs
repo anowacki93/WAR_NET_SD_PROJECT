@@ -22,6 +22,6 @@ namespace SDMan.ViewModel
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public IdentityRole Role { get; set; }
+        public IdentityRole<int> Role { get; set; }
     }
 }

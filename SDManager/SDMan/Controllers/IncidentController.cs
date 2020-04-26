@@ -135,11 +135,12 @@ namespace SDMan.Controllers
         [HttpPost]
         public JsonResult CreateJS(string prefix)
         {
-            var List = _categoryService.GetAll();
-            var CatList = (from N in List
+            List<CategoryModel> list = new List<CategoryModel>();
+            list = _context.Categories.ToList();
+            var CatList = (from N in list
                             where N.Name.StartsWith(prefix)
-                            select new { N.Name });
-            return new JsonResult(CatList);
+                            select new { value = N.Name,label = N.Name });
+            return Json(CatList);
             
         }
     }
