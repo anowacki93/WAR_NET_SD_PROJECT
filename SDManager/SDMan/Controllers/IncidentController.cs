@@ -14,19 +14,20 @@ namespace SDMan.Controllers
 {
     public class IncidentController : Controller
     {
-        //private readonly SignInManager<UserModel> signInManager;
+        private readonly UserManager<UserModel> _userManager;
         private readonly IIncidentService _modelService;
         private readonly IPriorityService _priorityService;
         private readonly ICategoryService _categoryService;
         private readonly IDepartmentService _departmentService;
         private readonly SDManDbContext _context;
-        public IncidentController(IIncidentService modelService, IDepartmentService departmentService, ICategoryService categoryService, IPriorityService priorityService, SDManDbContext context)
+        public IncidentController(IIncidentService modelService, IDepartmentService departmentService, ICategoryService categoryService, IPriorityService priorityService, SDManDbContext context, UserManager<UserModel> userManager)
         {
             _priorityService = priorityService;
             _categoryService = categoryService;
             _departmentService = departmentService;
             _modelService = modelService;
             _context = context;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {   //Po utworzeniu userów
@@ -50,7 +51,7 @@ namespace SDMan.Controllers
         }
       
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm]IncidentModel model) //[FromForm] - potrzebne do mapowania danych z formularza na obiekt w przypadku gdy korzystamy z Razora lub zwykłego HTMLa. Przy taghelperach nie jest to konieczne tak jak w tym przypadku
+        public async Task<IActionResult> Create([FromForm]IncidentModel model,int id) //[FromForm] - potrzebne do mapowania danych z formularza na obiekt w przypadku gdy korzystamy z Razora lub zwykłego HTMLa. Przy taghelperach nie jest to konieczne tak jak w tym przypadku
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +62,8 @@ namespace SDMan.Controllers
                     //model.UserId = User.Identity.Name;
 
                     // model.ListPriorites = new SelectList(_modelService.GetAll());
-                    
+                    model.CreatedBy = await _userManager.FindByNameAsync(User.Identity.Name);
+                    model.ModifiedBy = await _userManager.FindByNameAsync(User.Identity.Name);
                     _modelService.Create(model);
                     //context.SaveChanges();
                 }
@@ -95,12 +97,13 @@ namespace SDMan.Controllers
             }
             return Redirect("Index");
         }
-        public IActionResult Edit(IncidentModel model,int id)
+        public async Task<IActionResult> Edit(IncidentModel model,int id)
         {
-            
+
             //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
             //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
             //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
+            model.ModifiedBy = await _userManager.FindByNameAsync(User.Identity.Name);
             return View(_modelService.Get(id));
         }
         [HttpPost]

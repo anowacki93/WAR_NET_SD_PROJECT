@@ -2,7 +2,7 @@
 
 namespace SDMan.Migrations
 {
-    public partial class initial3 : Migration
+    public partial class initial2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

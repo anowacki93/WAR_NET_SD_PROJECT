@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SDMan.Context;
 using SDMan.Models;
@@ -12,15 +13,17 @@ namespace SDMan.Services
 {
     public class IncidentService : IIncidentService
     {
-        
+        private readonly UserManager<UserModel> _userManager;
         private readonly SDManDbContext _context;
-        public IncidentService(SDManDbContext context)
+        public IncidentService(SDManDbContext context, UserManager<UserModel> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public bool Create(IncidentModel incidentModel)
         {
-            //incidentModel.ListPriorites = new SelectList(_context.Priorities.ToList());
+
+            
             incidentModel.LastModified = DateTime.UtcNow.AddHours(2);
             incidentModel.CreatedDate = DateTime.UtcNow.AddHours(2);
             incidentModel.Status = _context.Statuses.Where(x=>x.Id==1).FirstOrDefault();

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SDMan.Migrations
 {
-    public partial class initial1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -145,8 +145,7 @@ namespace SDMan.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
-                    RoleId1 = table.Column<string>(nullable: true),
+                    RoleId = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -159,8 +158,8 @@ namespace SDMan.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_IdentityRole_RoleId1",
-                        column: x => x.RoleId1,
+                        name: "FK_AspNetUsers_IdentityRole_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "IdentityRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -365,9 +364,9 @@ namespace SDMan.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_RoleId1",
+                name: "IX_AspNetUsers_RoleId",
                 table: "AspNetUsers",
-                column: "RoleId1");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incidents_AssigneeId",

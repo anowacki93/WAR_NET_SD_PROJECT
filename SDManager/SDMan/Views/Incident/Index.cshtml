@@ -55,10 +55,10 @@
                 @Html.DisplayFor(modelItem => item.Assignee)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
+                @Html.DisplayFor(modelItem => item.CreatedBy.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PriorityName)

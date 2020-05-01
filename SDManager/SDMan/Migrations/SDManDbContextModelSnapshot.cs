@@ -370,10 +370,7 @@ namespace SDMan.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleId1")
+                    b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SecurityStamp")
@@ -398,7 +395,7 @@ namespace SDMan.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("RoleId1");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -493,7 +490,7 @@ namespace SDMan.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId1");
+                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }

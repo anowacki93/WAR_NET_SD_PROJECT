@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using SDMan.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SDMan.ViewModel
 {
@@ -8,5 +12,7 @@ namespace SDMan.ViewModel
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
+        [NotMapped]
+        public List<IdentityRole<int>> ListRole { get; set; }
     }
 }

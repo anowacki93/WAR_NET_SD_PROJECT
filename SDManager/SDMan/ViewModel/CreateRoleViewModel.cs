@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SDMan.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,8 @@ namespace SDMan.ViewModel
     public class CreateRoleViewModel
     {
         public string RoleName { get; set; }
-        [NotMapped]
-        public List<IdentityRole<int>> ListRoles { get; set; }
+        //[NotMapped]
+        //public List<IdentityRole<int>> ListRoles { get; set; }
+        
     }
 }

@@ -13,10 +13,11 @@ namespace SDMan.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Created { get; set; }
-        public int RoleId { get; set; }
-        public IdentityRole Role { get; set; }
         //public int GroupId { get; set; }
-        public GroupModel Group { get; set; }
+        public IdentityRole Role { get; set; }
+        public int? GroupId { get; set; }
+        public GroupModel? Group { get; set; }
         
+
     }
 }
