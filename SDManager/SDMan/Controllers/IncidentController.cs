@@ -35,6 +35,35 @@ namespace SDMan.Controllers
             //var modelData = _modelService.GetAll().Where(x => x.UserId == user);
             //Przed utworzeniem userow
             var modelData = _modelService.GetAll();
+            if (User.IsInRole("Administrator"))
+            {
+                modelData = _modelService.GetAll();
+            }
+            else
+            {
+                modelData = _modelService.GetAll().Where(x => x.CreatedBy == User.Identity.Name).ToList();
+            }
+            
+
+            return View(modelData);
+        }
+        public IActionResult GroupIncidents()
+        {   //Po utworzeniu userów
+            //var user = User.Identity.Name;
+            //var modelData = _modelService.GetAll().Where(x => x.UserId == user);
+            //Przed utworzeniem userow
+            var modelData = _modelService.GetAll();
+            if (User.IsInRole("Systems"))
+            {
+                _modelService.GetAll().Where(x => x.RoleName == "Systems");
+            }
+            else
+            {
+                _modelService.GetAll().Where(x => x.RoleName == "Helpdesk");
+            }
+            
+
+
             return View(modelData);
         }
         public IActionResult Create()
@@ -137,7 +166,7 @@ namespace SDMan.Controllers
             return View(modelData.Count());
         }
         [HttpPost]
-        public JsonResult CreateJS(string prefix)
+        public JsonResult CategoryJS(string prefix)
         {
             List<CategoryModel> list = new List<CategoryModel>();
             list = _context.Categories.ToList();
@@ -145,7 +174,27 @@ namespace SDMan.Controllers
                             where N.Name.StartsWith(prefix)
                             select new { value = N.Name,label = N.Name });
             return Json(CatList);
-            
+        }
+        
+        [HttpPost]
+        public JsonResult DepartmentJS(string prefix)
+        {
+            List<DepartmentModel> list = new List<DepartmentModel>();
+            list = _context.Departments.ToList();
+            var GList = (from N in list
+                         where N.Name.StartsWith(prefix)
+                         select new { value = N.Name, label = N.Name });
+            return Json(GList);
+        }
+        [HttpPost]
+        public JsonResult PriorityJS(string prefix)
+        {
+            List<PriorityModel> list = new List<PriorityModel>();
+            list = _context.Priorities.ToList();
+            var GList = (from N in list
+                         where N.Name.StartsWith(prefix)
+                         select new { value = N.Name, label = N.Name });
+            return Json(GList);
         }
     }
 }

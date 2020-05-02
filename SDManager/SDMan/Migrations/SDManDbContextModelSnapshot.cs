@@ -256,6 +256,9 @@ namespace SDMan.Migrations
                     b.Property<string>("PriorityName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 

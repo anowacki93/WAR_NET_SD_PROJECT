@@ -10,7 +10,7 @@ using SDMan.Context;
 namespace SDMan.Migrations
 {
     [DbContext(typeof(SDManDbContext))]
-    [Migration("20200501131415_initial")]
+    [Migration("20200502134422_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -256,6 +256,9 @@ namespace SDMan.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PriorityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StatusId")

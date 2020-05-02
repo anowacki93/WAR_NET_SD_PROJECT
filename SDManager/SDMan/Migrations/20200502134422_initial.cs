@@ -270,7 +270,8 @@ namespace SDMan.Migrations
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     PriorityName = table.Column<string>(nullable: true),
-                    PriorityId = table.Column<int>(nullable: true)
+                    PriorityId = table.Column<int>(nullable: true),
+                    RoleName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

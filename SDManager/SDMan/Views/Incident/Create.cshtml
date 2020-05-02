@@ -15,7 +15,55 @@
         $("#Category").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "/Incident/CreateJS",
+                    url: "/Incident/CategoryJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Group").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/GroupJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Department").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/DepartmentJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Priority").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/PriorityJS",
                     type: "POST",
                     dataType: "json",
                     data: { Prefix: request.term },
@@ -44,8 +92,17 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="Category">Cat:</label>
+                <label for="Category">Category:</label>
                 <input asp-for="CategoryName" type"text" name="CategoryName" id="Category" />
+            </div>
+            
+            <div class="form-group">
+                <label for="Department">Department:</label>
+                <input asp-for="DepartmentName" type"text" name="DepartmentName" id="Department" />
+            </div>
+            <div class="form-group">
+                <label for="Priority">Priority:</label>
+                <input asp-for="PriorityName" type"text" name="PriorityName" id="Priority" />
             </div>
 
             <div class="form-group">

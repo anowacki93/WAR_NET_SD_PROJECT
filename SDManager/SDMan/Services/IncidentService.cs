@@ -27,12 +27,16 @@ namespace SDMan.Services
             
             incidentModel.LastModified = DateTime.UtcNow.AddHours(2);
             incidentModel.CreatedDate = DateTime.UtcNow.AddHours(2);
-            incidentModel.Status = _context.Statuses.Where(x=>x.Id==1).FirstOrDefault();
+            incidentModel.Status = _context.Statuses.Where(x=>x.Name=="Open").FirstOrDefault();
+            //incidentModel.Group = _context.Groups.Where(x => x.Name == "Helpdesk").FirstOrDefault();
             incidentModel.StatusName = incidentModel.Status.Name;
+            //incidentModel.GroupName = incidentModel.Group.Name;
+            incidentModel.RoleName = _context.Roles.Where(x => x.Name == "Helpdesk").Select(x => x.Name).FirstOrDefault();
             incidentModel.Category = _context.Categories.Where(x => x.Name == incidentModel.CategoryName).FirstOrDefault();
             incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
             incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
             //_context.Add(incidentModel);
+            
             _context.Incidents.Add(incidentModel);
             return _context.SaveChanges() > 0;
         }
@@ -44,6 +48,7 @@ namespace SDMan.Services
 
         public IList<IncidentModel> GetAll()
         {
+            
             return _context.Incidents.ToList();
         }
 
@@ -52,9 +57,9 @@ namespace SDMan.Services
             var editmodel = _context.Incidents.Where(x => x.Id == model.Id).FirstOrDefault();
             model.IncidentDescription = editmodel.IncidentDescription;
             model.LastModified = editmodel.LastModified;
-            model.ListCategories = editmodel.ListCategories;
-            model.ListDepartments = editmodel.ListDepartments;
-            model.ListPriorities = editmodel.ListPriorities;
+            //model.ListCategories = editmodel.ListCategories;
+            //model.ListDepartments = editmodel.ListDepartments;
+            //model.ListPriorities = editmodel.ListPriorities;
             model.ModifiedBy = editmodel.ModifiedBy;
             model.Priority = editmodel.Priority;
             model.PriorityName = editmodel.PriorityName;

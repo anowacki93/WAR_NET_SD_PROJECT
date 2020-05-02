@@ -28,15 +28,18 @@ namespace SDMan.Models
         public string ModifiedBy { get; set; }
         public string PriorityName { get; set; }
         public PriorityModel Priority { get; set; }
-        [NotMapped]
+        public string RoleName { get; set; }
+        //public string GroupName { get; set; }
+        //public GroupModel Group{ get; set; }
+        //[NotMapped]
 
-        public SelectList? ListPriorities { get; set; }
-        [NotMapped]
+        //public SelectList? ListPriorities { get; set; }
+        //[NotMapped]
 
-        public List<CategoryModel> ListCategories { get; set; }
-        [NotMapped]
+        //public List<CategoryModel> ListCategories { get; set; }
+        //[NotMapped]
 
-        public SelectList? ListDepartments { get; set; }
+        //public SelectList? ListDepartments { get; set; }
 
     }
 }
