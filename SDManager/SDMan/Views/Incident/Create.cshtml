@@ -20,16 +20,11 @@
                     dataType: "json",
                     data: { Prefix: request.term },
                     success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
-                        }))
-
+                        response(data);
                     }
                 })
             },
-            messages: {
-                noResults: "", results: ""
-            }
+
         });
     })
 </script>
@@ -48,31 +43,9 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            
-            @*@using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-
-                <hr />
-
-                <div class="form-group">
-
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-
-                    </div>
-                </div>
-
-
-
-
-            </div>
-        }*@
             <div class="form-group">
                 <label for="Category">Cat:</label>
-                <input type"text" name="Category" id="Category" />
+                <input asp-for="CategoryName" type"text" name="CategoryName" id="Category" />
             </div>
 
             <div class="form-group">

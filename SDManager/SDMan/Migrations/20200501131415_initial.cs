@@ -146,7 +146,7 @@ namespace SDMan.Migrations
                     LastName = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     RoleId = table.Column<string>(nullable: true),
-                    GroupId = table.Column<int>(nullable: false)
+                    GroupId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,7 +156,7 @@ namespace SDMan.Migrations
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_IdentityRole_RoleId",
                         column: x => x.RoleId,
@@ -267,8 +267,8 @@ namespace SDMan.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false),
                     AssigneeId = table.Column<int>(nullable: true),
-                    CreatedById = table.Column<int>(nullable: true),
-                    ModifiedById = table.Column<int>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    ModifiedBy = table.Column<string>(nullable: true),
                     PriorityName = table.Column<string>(nullable: true),
                     PriorityId = table.Column<int>(nullable: true)
                 },
@@ -288,21 +288,9 @@ namespace SDMan.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Incidents_AspNetUsers_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Incidents_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Incidents_AspNetUsers_ModifiedById",
-                        column: x => x.ModifiedById,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -379,19 +367,9 @@ namespace SDMan.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Incidents_CreatedById",
-                table: "Incidents",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Incidents_DepartmentId",
                 table: "Incidents",
                 column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Incidents_ModifiedById",
-                table: "Incidents",
-                column: "ModifiedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Incidents_PriorityId",

@@ -62,8 +62,9 @@ namespace SDMan.Controllers
                     //model.UserId = User.Identity.Name;
 
                     // model.ListPriorites = new SelectList(_modelService.GetAll());
-                    model.CreatedBy = await _userManager.FindByNameAsync(User.Identity.Name);
-                    model.ModifiedBy = await _userManager.FindByNameAsync(User.Identity.Name);
+                    model.CreatedBy = User.Identity.Name;
+                    model.ModifiedBy = User.Identity.Name;
+                   var test =  model.CreatedBy;
                     _modelService.Create(model);
                     //context.SaveChanges();
                 }
@@ -103,7 +104,7 @@ namespace SDMan.Controllers
             //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
             //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
             //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
-            model.ModifiedBy = await _userManager.FindByNameAsync(User.Identity.Name);
+            model.ModifiedBy = User.Identity.Name;
             return View(_modelService.Get(id));
         }
         [HttpPost]

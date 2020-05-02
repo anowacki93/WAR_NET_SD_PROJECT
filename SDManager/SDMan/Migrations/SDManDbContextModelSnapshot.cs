@@ -229,8 +229,8 @@ namespace SDMan.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CreatedById")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -247,8 +247,8 @@ namespace SDMan.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ModifiedById")
-                        .HasColumnType("int");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PriorityId")
                         .HasColumnType("int");
@@ -271,11 +271,7 @@ namespace SDMan.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("PriorityId");
 
@@ -461,17 +457,9 @@ namespace SDMan.Migrations
                         .WithMany("Incidents")
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("SDMan.Models.UserModel", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("SDMan.Models.DepartmentModel", "Department")
                         .WithMany("Incidents")
                         .HasForeignKey("DepartmentId");
-
-                    b.HasOne("SDMan.Models.UserModel", "ModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("ModifiedById");
 
                     b.HasOne("SDMan.Models.PriorityModel", "Priority")
                         .WithMany()

@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SDMan.Context;
-using SDMan.Models;
-using SDMan.Services.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using SDMan.Context;
+using SDMan.Models;
+using SDMan.Services.Interfaces;
 
 namespace SDMan.Services
 {
@@ -31,7 +32,7 @@ namespace SDMan.Services
             incidentModel.Category = _context.Categories.Where(x => x.Name == incidentModel.CategoryName).FirstOrDefault();
             incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
             incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
-            _context.Add(incidentModel);
+            //_context.Add(incidentModel);
             _context.Incidents.Add(incidentModel);
             return _context.SaveChanges() > 0;
         }

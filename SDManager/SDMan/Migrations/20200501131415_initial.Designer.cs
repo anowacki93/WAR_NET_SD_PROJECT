@@ -10,7 +10,7 @@ using SDMan.Context;
 namespace SDMan.Migrations
 {
     [DbContext(typeof(SDManDbContext))]
-    [Migration("20200501115634_initial")]
+    [Migration("20200501131415_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,8 +231,8 @@ namespace SDMan.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CreatedById")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -249,8 +249,8 @@ namespace SDMan.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ModifiedById")
-                        .HasColumnType("int");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PriorityId")
                         .HasColumnType("int");
@@ -273,11 +273,7 @@ namespace SDMan.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("ModifiedById");
 
                     b.HasIndex("PriorityId");
 
@@ -343,7 +339,7 @@ namespace SDMan.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -463,17 +459,9 @@ namespace SDMan.Migrations
                         .WithMany("Incidents")
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("SDMan.Models.UserModel", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("SDMan.Models.DepartmentModel", "Department")
                         .WithMany("Incidents")
                         .HasForeignKey("DepartmentId");
-
-                    b.HasOne("SDMan.Models.UserModel", "ModifiedBy")
-                        .WithMany()
-                        .HasForeignKey("ModifiedById");
 
                     b.HasOne("SDMan.Models.PriorityModel", "Priority")
                         .WithMany()
@@ -488,9 +476,7 @@ namespace SDMan.Migrations
                 {
                     b.HasOne("SDMan.Models.GroupModel", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
                         .WithMany()

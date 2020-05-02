@@ -24,8 +24,8 @@ namespace SDMan.Models
         [DisplayFormat(DataFormatString = "{0:HH:mm dd/MM/yyyy}")]
         public DateTime LastModified { get; set; }
         public UserModel? Assignee { get; set; }
-        public UserModel CreatedBy { get; set; }
-        public UserModel ModifiedBy { get; set; }
+        public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
         public string PriorityName { get; set; }
         public PriorityModel Priority { get; set; }
         [NotMapped]
