@@ -196,5 +196,34 @@ namespace SDMan.Controllers
                          select new { value = N.Name, label = N.Name });
             return Json(GList);
         }
+        [HttpPost]
+        public JsonResult StatusJS(string prefix)
+        {
+            List<StatusModel> list = new List<StatusModel>();
+            list = _context.Statuses.ToList();
+            var GList = (from N in list
+                         where N.Name.StartsWith(prefix)
+                         select new { value = N.Name, label = N.Name });
+            return Json(GList);
+        }
+        public JsonResult AssigneeJS(string prefix)
+        {
+            List<UserModel> list = new List<UserModel>();
+            list = _context.Users.ToList();
+            var GList = (from N in list
+                         where N.UserName.StartsWith(prefix)
+                         select new { value = N.UserName, label = N.UserName });
+            return Json(GList);
+        }
+        public JsonResult RoleJS(string prefix)
+        {
+            List<IdentityRole<int>> list = new List<IdentityRole<int>>();
+            list = _context.Roles.ToList();
+            var GList = (from N in list
+                         where N.Name.StartsWith(prefix)
+                         select new { value = N.Name, label = N.Name });
+            return Json(GList);
+        }
+
     }
 }

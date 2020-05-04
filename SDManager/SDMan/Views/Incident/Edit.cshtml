@@ -4,13 +4,130 @@
     ViewData["Title"] = "View";
 }
 
-<h1>View</h1>
+
 
 <h4>IncidentModel</h4>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Category").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/CategoryJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Group").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/GroupJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Department").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/DepartmentJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Priority").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/PriorityJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Status").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/StatusJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Assignee").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/AssigneeJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+    $(document).ready(function () {
+        $("#Role").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/RoleJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
+</script>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="View">
+        <form asp-action="EditSave">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -23,15 +140,31 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            @*<div class="col-sm-3">
-            <select asp-for="PriorityName" asp-items="Model.ListPriorities"></select>
-        </div>*@
-        @*<div class="col-sm-3">
-            <select asp-for="CategoryName" asp-items="Model.ListCategories"></select>
-        </div>*@
-        @*<div class="col-sm-3">
-            <select asp-for="DepartmentName" asp-items="Model.ListDepartments"></select>
-        </div>*@
+            <div class="form-group">
+                <label for="Category">Category:</label>
+                <input asp-for="CategoryName" type"text" name="CategoryName" id="Category" />
+            </div>
+
+            <div class="form-group">
+                <label for="Department">Department:</label>
+                <input asp-for="DepartmentName" type"text" name="DepartmentName" id="Department" />
+            </div>
+            <div class="form-group">
+                <label for="Priority">Priority:</label>
+                <input asp-for="PriorityName" type"text" name="PriorityName" id="Priority" />
+            </div>
+            <div class="form-group">
+                <label for="Status">Status:</label>
+                <input asp-for="StatusName" type"text" name="StatusName" id="Status" />
+            </div>
+            <div class="form-group">
+                <label for="Assignee">Assignee:</label>
+                <input asp-for="Assignee" type"text" name="Assignee" id="Assignee" />
+            </div>
+            <div class="form-group">
+                <label for="Role">Role:</label>
+                <input asp-for="RoleName" type"text" name="RoleName" id="Role" />
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
