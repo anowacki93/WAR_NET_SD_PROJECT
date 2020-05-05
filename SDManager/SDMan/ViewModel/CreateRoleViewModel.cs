@@ -11,8 +11,6 @@ namespace SDMan.ViewModel
     public class CreateRoleViewModel
     {
         public string RoleName { get; set; }
-        //[NotMapped]
-        //public List<IdentityRole<int>> ListRoles { get; set; }
-        
+
     }
 }

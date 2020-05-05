@@ -19,10 +19,7 @@ namespace SDMan.Controllers
             _modelService = modelService;
         }
         public IActionResult Index()
-        {   //Po utworzeniu userów
-            //var user = User.Identity.Name;
-            //var modelData = _modelService.GetAll().Where(x => x.UserId == user);
-            //Przed utworzeniem userow
+        {  
             var modelData = _modelService.GetAll();
             return View(modelData);
         }
@@ -38,8 +35,6 @@ namespace SDMan.Controllers
             {
                 try
                 {
-                    //model.UserId = User.Identity.Name;
-
                     _modelService.Create(model);
                     //context.SaveChanges();
                 }

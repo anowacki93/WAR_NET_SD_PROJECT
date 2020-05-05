@@ -25,8 +25,5 @@ namespace SDMan.ViewModel
         [Required]
         public string LastName { get; set; }
         public IdentityRole<int> Role { get; set; }
-        //public string Rolename { get; set; }
-        //[NotMapped]
-        //public SelectList? ListRole { get; set; }
     }
 }

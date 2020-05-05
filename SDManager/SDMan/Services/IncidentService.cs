@@ -16,6 +16,7 @@ namespace SDMan.Services
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly SDManDbContext _context;
+        IncidentModel testModel = new IncidentModel();
         public IncidentService(SDManDbContext context, UserManager<UserModel> userManager)
         {
             _context = context;
@@ -28,14 +29,11 @@ namespace SDMan.Services
             incidentModel.LastModified = DateTime.UtcNow.AddHours(2);
             incidentModel.CreatedDate = DateTime.UtcNow.AddHours(2);
             incidentModel.Status = _context.Statuses.Where(x=>x.Name=="Open").FirstOrDefault();
-            //incidentModel.Group = _context.Groups.Where(x => x.Name == "Helpdesk").FirstOrDefault();
             incidentModel.StatusName = incidentModel.Status.Name;
-            //incidentModel.GroupName = incidentModel.Group.Name;
             incidentModel.RoleName = _context.Roles.Where(x => x.Name == "Helpdesk").Select(x => x.Name).FirstOrDefault();
             incidentModel.Category = _context.Categories.Where(x => x.Name == incidentModel.CategoryName).FirstOrDefault();
             incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
             incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
-            //_context.Add(incidentModel);
             
             _context.Incidents.Add(incidentModel);
             return _context.SaveChanges() > 0;
@@ -43,7 +41,13 @@ namespace SDMan.Services
 
         public IncidentModel Get(int id)
         {
-            return _context.Incidents.SingleOrDefault(b => b.Id == id);
+            var incidentModel = new IncidentModel();
+            incidentModel = _context.Incidents.SingleOrDefault(b => b.Id == id);
+            incidentModel.Category = _context.Categories.Where(x => x.Name == incidentModel.CategoryName).FirstOrDefault();
+            incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
+            incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
+            incidentModel.Status = _context.Statuses.Where(x => x.Name == incidentModel.StatusName).FirstOrDefault();
+            return incidentModel;
         }
 
         public IList<IncidentModel> GetAll()
@@ -54,23 +58,13 @@ namespace SDMan.Services
 
         public bool Update(IncidentModel model)
         {
-            //model.ListCategories = editmodel.ListCategories;
-            //model.ListDepartments = editmodel.ListDepartments;
-            //model.ListPriorities = editmodel.ListPriorities;
-
-            //var editmodel = _context.Incidents.Where(x => x.Id == model.Id).FirstOrDefault();
-            //model.IncidentDescription = editmodel.IncidentDescription;
-            //model.LastModified = editmodel.LastModified;
-            //model.ModifiedBy = editmodel.ModifiedBy;
-            //model.Priority = editmodel.Priority;
-            //model.PriorityName = editmodel.PriorityName;
-            //model.Status = editmodel.Status;
-            //model.StatusName = editmodel.StatusName;
-            //model.Title = editmodel.Title;
-             
-            
-
+            model.CreatedDate = model.CreatedDate;
+            model.Category = _context.Categories.Where(x => x.Name == model.CategoryName).FirstOrDefault();
+            model.Priority = _context.Priorities.Where(x => x.Name == model.PriorityName).FirstOrDefault();
+            model.Department = _context.Departments.Where(x => x.Name == model.DepartmentName).FirstOrDefault();
+            model.Status = _context.Statuses.Where(x => x.Name == model.StatusName).FirstOrDefault();
             _context.Incidents.Update(model);
+            //_context.Incidents.Add(model);
             return _context.SaveChanges() > 0;
         }
 

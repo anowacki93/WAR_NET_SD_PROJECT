@@ -43,7 +43,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Where(x=>x.StatusName!="Closed"))
         {
 
             <tr>

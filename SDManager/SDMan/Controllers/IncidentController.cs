@@ -20,6 +20,7 @@ namespace SDMan.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IDepartmentService _departmentService;
         private readonly SDManDbContext _context;
+        IncidentModel _modelTest = new IncidentModel();
         public IncidentController(IIncidentService modelService, IDepartmentService departmentService, ICategoryService categoryService, IPriorityService priorityService, SDManDbContext context, UserManager<UserModel> userManager)
         {
             _priorityService = priorityService;
@@ -28,12 +29,10 @@ namespace SDMan.Controllers
             _modelService = modelService;
             _context = context;
             _userManager = userManager;
+            
         }
         public IActionResult Index()
-        {   //Po utworzeniu userów
-            //var user = User.Identity.Name;
-            //var modelData = _modelService.GetAll().Where(x => x.UserId == user);
-            //Przed utworzeniem userow
+        {  
             var modelData = _modelService.GetAll();
             if (User.IsInRole("Administrator"))
             {
@@ -48,34 +47,23 @@ namespace SDMan.Controllers
             return View(modelData);
         }
         public IActionResult GroupIncidents()
-        {   //Po utworzeniu userów
-            //var user = User.Identity.Name;
-            //var modelData = _modelService.GetAll().Where(x => x.UserId == user);
-            //Przed utworzeniem userow
-            var modelData = _modelService.GetAll();
+        {
+            var modelData = _modelService.GetAll().Where(x => x.RoleName == "IT");
+            //var modelData = _modelService.GetAll();
             if (User.IsInRole("Systems"))
             {
-                _modelService.GetAll().Where(x => x.RoleName == "Systems");
+              modelData = _modelService.GetAll().Where(x => x.RoleName == "Systems");
             }
             else
             {
-                _modelService.GetAll().Where(x => x.RoleName == "Helpdesk");
+                modelData = _modelService.GetAll().Where(x => x.RoleName == "Helpdesk");
             }
-            
-
 
             return View(modelData);
         }
         public IActionResult Create()
         {
             IncidentModel model = new IncidentModel();
-            //model.ListPriorites = new SelectList(_modelService.GetAll(), model.Priority);
-            //model.ListPriorites = new SelectList(_modelService.GetAll().ToList());
-            //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
-            //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
-            //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
-            //model.ListPriorities = _priorityService.GetAll().ToList();
-            //model.ListCategories = _context.Categories.ToList();
             return View(model);
         }
       
@@ -86,11 +74,6 @@ namespace SDMan.Controllers
             {
                 try
                 {
-                    //var user = await signInManager.UserManager.FindByIdAsync(User.Identity.ToString());
-                    //model.CreatedBy = model.ModifiedBy = user;
-                    //model.UserId = User.Identity.Name;
-
-                    // model.ListPriorites = new SelectList(_modelService.GetAll());
                     model.CreatedBy = User.Identity.Name;
                     model.ModifiedBy = User.Identity.Name;
                    var test =  model.CreatedBy;
@@ -127,21 +110,17 @@ namespace SDMan.Controllers
             }
             return Redirect("Index");
         }
-        public async Task<IActionResult> Edit(IncidentModel model,int id)
-        {
-
-            //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
-            //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
-            //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
-            model.ModifiedBy = User.Identity.Name;
+        public async Task<IActionResult> Edit(int id)
+        {            
             return View(_modelService.Get(id));
         }
         [HttpPost]
         public IActionResult EditSave(IncidentModel model)
-        {
+        {            
             try
             {
-
+                model.LastModified = DateTime.UtcNow.AddHours(2);
+                model.ModifiedBy = User.Identity.Name;
                 _modelService.Update(model);
             }
             catch (Exception e)
@@ -154,10 +133,7 @@ namespace SDMan.Controllers
         }
         public IActionResult Details(int id)
         {
-            //IncidentModel model = new IncidentModel();
-            //model.ListPriorities = new SelectList(_priorityService.GetAll().Select(x => x.Name).ToList(), model.PriorityName);
-            //model.ListDepartments = new SelectList(_departmentService.GetAll().Select(x => x.Name).ToList(), model.DepartmentName);
-            //model.ListCategories = new SelectList(_categoryService.GetAll().Select(x => x.Name).ToList(), model.CategoryName);
+            
             return View(_modelService.Get(id));
         }
         public IActionResult Show()

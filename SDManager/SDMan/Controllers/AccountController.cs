@@ -7,7 +7,6 @@ using SDMan.Models;
 using SDMan.ViewModel;
 using System;
 using System.Collections.Generic;
-//using SDMan.ViewModels;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -21,8 +20,6 @@ namespace PlanFood.Mvc.Context
         private readonly UserManager<UserModel> userManager;
         private readonly RoleManager<IdentityRole<int>> roleManager;
         private readonly SDManDbContext _context;
-        //private readonly UserModel userModel;
-
 
         public AccountController(SignInManager<UserModel> _signInManager,
             UserManager<UserModel> _userManager,RoleManager<IdentityRole<int>> _roleManager, SDManDbContext context)
@@ -31,14 +28,10 @@ namespace PlanFood.Mvc.Context
             userManager = _userManager;
             roleManager = _roleManager;
             _context = context;
-
-
-
         }
        
         public IActionResult Index()
         {
-
             return View();
         }
 
@@ -52,30 +45,14 @@ namespace PlanFood.Mvc.Context
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            //IdentityRole<int> identity = new IdentityRole<int>
-            //{
-            //    Name = "Administrator"
-            //};
-            //await roleManager.CreateAsync(identity);
-            //var admin = new UserModel { UserName = "Administrator" };
-
-            //await userManager.CreateAsync(admin, "Administrator");
-            //await userManager.AddToRoleAsync(admin, "Administrator");
-
             if (ModelState.IsValid)
-            {
-                
-                //var user = new UserModel { UserName = viewModel.UserName,Email=viewModel.UserName, FirstName=viewModel.FirstName,LastName=viewModel.LastName};
+            {                
                 var user = new UserModel { UserName = viewModel.UserName  };
-                //await userManager.AddToRoleAsync(user, "Employee");
-               // await userManager.AddToRoleAsync(user, "Employee");
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 await userManager.AddToRoleAsync(user, "Employee");
                 if (result.Succeeded)
-                {
-                    
-                        return RedirectToAction("Index", "Home");
-                   
+                {                    
+                        return RedirectToAction("Index", "Home");                   
                 }
                 foreach (var error in result.Errors)
                 {
@@ -151,7 +128,6 @@ namespace PlanFood.Mvc.Context
         [HttpGet]
         public async Task<IActionResult> EditRole(int id)
         {
-            // Find the role by Role ID
             var role = await roleManager.FindByIdAsync(id.ToString());
             
             if (role == null)
@@ -168,12 +144,8 @@ namespace PlanFood.Mvc.Context
 
             var users = userManager.Users.ToList();
 
-            // Retrieve all the Users
             foreach (var user in users)
             {
-                // If the user is in this role, add the username to
-                // Users property of EditRoleViewModel. This model
-                // object is then passed to the view for display
                 if (await userManager.IsInRoleAsync(user,role.Name))
                 {
                     model.Users.Add(user.UserName);
@@ -183,7 +155,6 @@ namespace PlanFood.Mvc.Context
             return View(model);
         }
 
-        // This action responds to HttpPost and receives EditRoleViewModel
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
@@ -197,8 +168,6 @@ namespace PlanFood.Mvc.Context
             else
             {
                 role.Name = model.Rolename;
-
-                // Update the Role using UpdateAsync
                 var result = await roleManager.UpdateAsync(role);
 
                 if (result.Succeeded)
@@ -219,9 +188,7 @@ namespace PlanFood.Mvc.Context
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
-
             var role = await roleManager.FindByIdAsync(roleId);
-
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
@@ -291,9 +258,7 @@ namespace PlanFood.Mvc.Context
                         return RedirectToAction("EditRole", new { Id = roleId });
                 }
             }
-
             return RedirectToAction("EditRole", new { Id = roleId });
         }
-
     }
 }
