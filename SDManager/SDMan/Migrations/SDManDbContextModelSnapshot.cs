@@ -223,6 +223,9 @@ namespace SDMan.Migrations
                     b.Property<int?>("AssigneeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("AssigneeName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
@@ -246,6 +249,12 @@ namespace SDMan.Migrations
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("LogId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LogsId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
@@ -276,11 +285,36 @@ namespace SDMan.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("LogsId");
+
                     b.HasIndex("PriorityId");
 
                     b.HasIndex("StatusId");
 
                     b.ToTable("Incidents");
+                });
+
+            modelBuilder.Entity("SDMan.Models.LogsModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("SDMan.Models.PriorityModel", b =>
@@ -464,6 +498,10 @@ namespace SDMan.Migrations
                         .WithMany("Incidents")
                         .HasForeignKey("DepartmentId");
 
+                    b.HasOne("SDMan.Models.LogsModel", "Logs")
+                        .WithMany()
+                        .HasForeignKey("LogsId");
+
                     b.HasOne("SDMan.Models.PriorityModel", "Priority")
                         .WithMany()
                         .HasForeignKey("PriorityId");
@@ -471,6 +509,15 @@ namespace SDMan.Migrations
                     b.HasOne("SDMan.Models.StatusModel", "Status")
                         .WithMany("Incidents")
                         .HasForeignKey("StatusId");
+                });
+
+            modelBuilder.Entity("SDMan.Models.LogsModel", b =>
+                {
+                    b.HasOne("SDMan.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SDMan.Models.UserModel", b =>

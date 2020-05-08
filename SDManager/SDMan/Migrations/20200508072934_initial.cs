@@ -251,6 +251,27 @@ namespace SDMan.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Comment = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Logs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Incidents",
                 columns: table => new
                 {
@@ -266,12 +287,15 @@ namespace SDMan.Migrations
                     StatusId = table.Column<int>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false),
+                    AssigneeName = table.Column<string>(nullable: true),
                     AssigneeId = table.Column<int>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     PriorityName = table.Column<string>(nullable: true),
                     PriorityId = table.Column<int>(nullable: true),
-                    RoleName = table.Column<string>(nullable: true)
+                    RoleName = table.Column<string>(nullable: true),
+                    LogId = table.Column<int>(nullable: false),
+                    LogsId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -292,6 +316,12 @@ namespace SDMan.Migrations
                         name: "FK_Incidents_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Incidents_Logs_LogsId",
+                        column: x => x.LogsId,
+                        principalTable: "Logs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -373,6 +403,11 @@ namespace SDMan.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Incidents_LogsId",
+                table: "Incidents",
+                column: "LogsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Incidents_PriorityId",
                 table: "Incidents",
                 column: "PriorityId");
@@ -381,6 +416,11 @@ namespace SDMan.Migrations
                 name: "IX_Incidents_StatusId",
                 table: "Incidents",
                 column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Logs_UserId",
+                table: "Logs",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -407,19 +447,22 @@ namespace SDMan.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Departments");
 
             migrationBuilder.DropTable(
+                name: "Logs");
+
+            migrationBuilder.DropTable(
                 name: "Priorities");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Groups");

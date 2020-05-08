@@ -4,11 +4,13 @@
 </html>
 
 <h1>SDMan</h1>
+
+
 @if (User.Identity.IsAuthenticated)
-    { 
+{
     if (User.IsInRole("Administrator"))
 
-            {
+    {
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,7 +48,7 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">Incidents</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
@@ -59,6 +61,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="GetRoles">Role</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
                                     </li>
                                 </ul>
                             </div>
@@ -110,10 +115,13 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">MyIncidents</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="GroupIncidents">My Group Incidents</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>
@@ -172,7 +180,10 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Incidents</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>

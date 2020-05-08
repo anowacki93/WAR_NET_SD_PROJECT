@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SDMan.Models.IncidentModel>
 
 @{
-    ViewData["Title"] = "GroupIncidents";
+    ViewData["Title"] = "MyIncidents";
 }
 
 <h1>Index</h1>
@@ -43,7 +43,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Where(x=>x.StatusName!="Closed"))
+        @foreach (var item in Model.Where(x => x.StatusName != "Closed"))
         {
 
             <tr>

@@ -123,6 +123,22 @@
 
         });
     })
+    $(document).ready(function () {
+        $("#Assignee").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Incident/AssigneeJS",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response(data);
+                    }
+                })
+            },
+
+        });
+    })
 </script>
 <hr />
 <div class="row">
@@ -174,12 +190,13 @@
             </div>
             <div class="form-group">
                 <label for="Assignee">Assignee:</label>
-                <input asp-for="Assignee" type"text" name="Assignee" id="Assignee" />
+                <input asp-for="Assignee.UserName" type"text" name="Assignee.UserName" id="Assignee" />
             </div>
             <div class="form-group">
                 <label for="Role">Role:</label>
                 <input asp-for="RoleName" type"text" name="RoleName" id="Role" />
             </div>
+            <
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

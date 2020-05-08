@@ -46,6 +46,7 @@ namespace SDMan.Controllers
 
             return View(modelData);
         }
+        
         public IActionResult GroupIncidents()
         {
             var modelData = _modelService.GetAll().Where(x => x.RoleName == "IT");
@@ -59,6 +60,14 @@ namespace SDMan.Controllers
                 modelData = _modelService.GetAll().Where(x => x.RoleName == "Helpdesk");
             }
 
+            return View(modelData);
+        }
+
+        public IActionResult MyIncidents()
+        {
+            var modelData = _modelService.GetAll();
+
+            modelData = _modelService.GetAll().Where(x => x.AssigneeName == User.Identity.Name).ToList();
             return View(modelData);
         }
         public IActionResult Create()
@@ -76,14 +85,17 @@ namespace SDMan.Controllers
                 {
                     model.CreatedBy = User.Identity.Name;
                     model.ModifiedBy = User.Identity.Name;
-                   var test =  model.CreatedBy;
+                    var test =  model.CreatedBy;
                     _modelService.Create(model);
                     //context.SaveChanges();
+                    
+                   // _modelService.Update(model);
                 }
                 catch (Exception)
                 {
                     return View(model);
                 }
+                
                 return Redirect("Index");
             }
             else
@@ -119,9 +131,12 @@ namespace SDMan.Controllers
         {            
             try
             {
+               
                 model.LastModified = DateTime.UtcNow.AddHours(2);
                 model.ModifiedBy = User.Identity.Name;
                 _modelService.Update(model);
+                
+                
             }
             catch (Exception e)
             {
@@ -200,6 +215,7 @@ namespace SDMan.Controllers
                          select new { value = N.Name, label = N.Name });
             return Json(GList);
         }
+        
 
     }
 }

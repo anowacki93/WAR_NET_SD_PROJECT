@@ -34,8 +34,17 @@ namespace SDMan.Services
             incidentModel.Category = _context.Categories.Where(x => x.Name == incidentModel.CategoryName).FirstOrDefault();
             incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
             incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
-            
+
+            var log = new LogsModel();
+            log.Comment = $"Incident created";
+            log.Date = DateTime.UtcNow.AddHours(2);
+            log.User = _context.Users.Where(x => x.UserName == incidentModel.CreatedBy).FirstOrDefault();
+            incidentModel.Logs = log;
+            incidentModel.LogId = incidentModel.Logs.Id;
+
+
             _context.Incidents.Add(incidentModel);
+
             return _context.SaveChanges() > 0;
         }
 
@@ -47,6 +56,9 @@ namespace SDMan.Services
             incidentModel.Priority = _context.Priorities.Where(x => x.Name == incidentModel.PriorityName).FirstOrDefault();
             incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
             incidentModel.Status = _context.Statuses.Where(x => x.Name == incidentModel.StatusName).FirstOrDefault();
+            incidentModel.Assignee = _context.Users.Where(x => x.UserName == incidentModel.AssigneeName).FirstOrDefault();
+            //incidentModel.Logs = _context.Logs.Where(x => x.Id == incidentModel.LogId).FirstOrDefault();
+
             return incidentModel;
         }
 
@@ -63,6 +75,7 @@ namespace SDMan.Services
             model.Priority = _context.Priorities.Where(x => x.Name == model.PriorityName).FirstOrDefault();
             model.Department = _context.Departments.Where(x => x.Name == model.DepartmentName).FirstOrDefault();
             model.Status = _context.Statuses.Where(x => x.Name == model.StatusName).FirstOrDefault();
+            model.AssigneeName = model.Assignee.UserName;
             _context.Incidents.Update(model);
             //_context.Incidents.Add(model);
             return _context.SaveChanges() > 0;

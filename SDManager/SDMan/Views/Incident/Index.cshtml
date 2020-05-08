@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(Model => Model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(Model => Model.Assignee)
+                @Html.DisplayNameFor(Model => Model.AssigneeName)
             </th>
             <th>
                 @Html.DisplayNameFor(Model => Model.CreatedBy)
@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Assignee)
+                @Html.DisplayFor(modelItem => item.AssigneeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedBy)
@@ -72,6 +72,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastModified)
+            </td>
+            <td>
+                <a asp-action="Logs" asp-route-id="@item.Id">Incident Logs</a>
             </td>
         </tr>
 }

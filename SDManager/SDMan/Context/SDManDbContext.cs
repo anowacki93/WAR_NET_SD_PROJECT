@@ -17,7 +17,9 @@ namespace SDMan.Context
 		public DbSet<IncidentModel> Incidents{ get; set; }
 		public DbSet<PriorityModel> Priorities{ get; set; }
 		public DbSet<StatusModel> Statuses{ get; set; }
+		public DbSet<LogsModel> Logs{ get; set; }
 		public override DbSet<UserModel> Users{ get; set; }
+
 		//protected override void OnModelCreating(ModelBuilder builder)
 		//{
 		//	base.OnModelCreating(builder);

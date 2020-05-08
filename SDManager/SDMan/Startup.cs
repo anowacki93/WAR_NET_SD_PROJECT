@@ -47,7 +47,7 @@ namespace SDMan
             services.AddScoped<IPriorityService, PriorityService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<IIncidentService, IncidentService>();
-
+            services.AddScoped<ILogsSerivce, LogsService>();
             services.AddMvc();
         }
         
