@@ -50,7 +50,6 @@ namespace SDMan.Controllers
         public IActionResult GroupIncidents()
         {
             var modelData = _modelService.GetAll().Where(x => x.RoleName == "IT");
-            //var modelData = _modelService.GetAll();
             if (User.IsInRole("Systems"))
             {
               modelData = _modelService.GetAll().Where(x => x.RoleName == "Systems");
@@ -87,9 +86,8 @@ namespace SDMan.Controllers
                     model.ModifiedBy = User.Identity.Name;
                     var test =  model.CreatedBy;
                     _modelService.Create(model);
-                    //context.SaveChanges();
-                    
-                   // _modelService.Update(model);
+                    model.LogId = model.Logs.Id;
+                    _modelService.Update(model);
                 }
                 catch (Exception)
                 {

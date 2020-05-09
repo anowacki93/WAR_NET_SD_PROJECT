@@ -31,7 +31,7 @@ namespace SDMan.Controllers
         }
         public IActionResult Logs(int id)
         {
-            return View(_modelService.GetAll(id));
+            return View(_modelService.Get(id));
         }
     }
 }

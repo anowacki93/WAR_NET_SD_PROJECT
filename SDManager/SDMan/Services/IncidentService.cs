@@ -57,7 +57,7 @@ namespace SDMan.Services
             incidentModel.Department = _context.Departments.Where(x => x.Name == incidentModel.DepartmentName).FirstOrDefault();
             incidentModel.Status = _context.Statuses.Where(x => x.Name == incidentModel.StatusName).FirstOrDefault();
             incidentModel.Assignee = _context.Users.Where(x => x.UserName == incidentModel.AssigneeName).FirstOrDefault();
-            //incidentModel.Logs = _context.Logs.Where(x => x.Id == incidentModel.LogId).FirstOrDefault();
+            incidentModel.Logs = _context.Logs.Where(x => x.Id == incidentModel.LogId).FirstOrDefault();
 
             return incidentModel;
         }
@@ -75,7 +75,17 @@ namespace SDMan.Services
             model.Priority = _context.Priorities.Where(x => x.Name == model.PriorityName).FirstOrDefault();
             model.Department = _context.Departments.Where(x => x.Name == model.DepartmentName).FirstOrDefault();
             model.Status = _context.Statuses.Where(x => x.Name == model.StatusName).FirstOrDefault();
-            model.AssigneeName = model.Assignee.UserName;
+            if (model.Assignee != null) 
+            {
+                model.AssigneeName = model.Assignee.UserName;
+            }
+            if (model.CreatedDate != model.LastModified) 
+            {
+                model.Logs.User = _context.Users.Where(x => x.UserName == model.ModifiedBy).FirstOrDefault();
+                model.Logs.Date = DateTime.UtcNow.AddHours(2);
+                model.LogId = model.Logs.Id;
+            }
+            
             _context.Incidents.Update(model);
             //_context.Incidents.Add(model);
             return _context.SaveChanges() > 0;
