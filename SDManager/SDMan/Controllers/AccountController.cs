@@ -47,7 +47,7 @@ namespace PlanFood.Mvc.Context
         {
             if (ModelState.IsValid)
             {                
-                var user = new UserModel { UserName = viewModel.UserName  };
+                var user = new UserModel { UserName = viewModel.UserName, Email=viewModel.Email  };
                 var result = await userManager.CreateAsync(user, viewModel.Password);
                 await userManager.AddToRoleAsync(user, "Employee");
                 if (result.Succeeded)

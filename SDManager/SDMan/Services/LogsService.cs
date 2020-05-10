@@ -29,8 +29,8 @@ namespace SDMan.Services
             var incidentModel = new IncidentModel();
             incidentModel = _context.Incidents.SingleOrDefault(b => b.Id == id);
             incidentModel.Logs = _context.Logs.SingleOrDefault(b => b.Id == incidentModel.LogId);
-            incidentModel.Logs.User = _context.Users.SingleOrDefault(x => x.UserName == incidentModel.CreatedBy);
-
+            incidentModel.Logs.User = _context.Users.SingleOrDefault(x => x.Id == incidentModel.Logs.UserId);
+            //incidentModel.Logs.Comment = _context.Logs.Where(x => x.Id == incidentModel.LogId).Select(x=>x.Comment).ToString();
             //var logsModel = incidentModel.Logs;
 
             return incidentModel.Logs;

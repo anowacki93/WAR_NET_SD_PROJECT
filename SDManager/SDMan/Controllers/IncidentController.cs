@@ -129,12 +129,11 @@ namespace SDMan.Controllers
         {            
             try
             {
-               
                 model.LastModified = DateTime.UtcNow.AddHours(2);
                 model.ModifiedBy = User.Identity.Name;
                 _modelService.Update(model);
-                
-                
+                model.LogId = model.Logs.Id;
+                _modelService.Update(model);
             }
             catch (Exception e)
             {
@@ -146,7 +145,6 @@ namespace SDMan.Controllers
         }
         public IActionResult Details(int id)
         {
-            
             return View(_modelService.Get(id));
         }
         public IActionResult Show()
@@ -171,7 +169,7 @@ namespace SDMan.Controllers
             List<DepartmentModel> list = new List<DepartmentModel>();
             list = _context.Departments.ToList();
             var GList = (from N in list
-                         where N.Name.StartsWith(prefix)
+                         where N.Name.StartsWith(prefix) 
                          select new { value = N.Name, label = N.Name });
             return Json(GList);
         }
@@ -181,7 +179,7 @@ namespace SDMan.Controllers
             List<PriorityModel> list = new List<PriorityModel>();
             list = _context.Priorities.ToList();
             var GList = (from N in list
-                         where N.Name.StartsWith(prefix)
+                         where N.Name.Contains(prefix)
                          select new { value = N.Name, label = N.Name });
             return Json(GList);
         }
@@ -198,7 +196,7 @@ namespace SDMan.Controllers
         public JsonResult AssigneeJS(string prefix)
         {
             List<UserModel> list = new List<UserModel>();
-            list = _context.Users.ToList();
+            list = _context.Users.Where(x=>x.UserName !=null).ToList();
             var GList = (from N in list
                          where N.UserName.StartsWith(prefix)
                          select new { value = N.UserName, label = N.UserName });

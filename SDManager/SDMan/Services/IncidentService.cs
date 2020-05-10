@@ -75,15 +75,22 @@ namespace SDMan.Services
             model.Priority = _context.Priorities.Where(x => x.Name == model.PriorityName).FirstOrDefault();
             model.Department = _context.Departments.Where(x => x.Name == model.DepartmentName).FirstOrDefault();
             model.Status = _context.Statuses.Where(x => x.Name == model.StatusName).FirstOrDefault();
-            if (model.Assignee != null) 
+            if (model.AssigneeName != null) 
             {
-                model.AssigneeName = model.Assignee.UserName;
+                model.Assignee = _context.Users.Where(x => x.UserName == model.AssigneeName).FirstOrDefault();
             }
             if (model.CreatedDate != model.LastModified) 
             {
-                model.Logs.User = _context.Users.Where(x => x.UserName == model.ModifiedBy).FirstOrDefault();
-                model.Logs.Date = DateTime.UtcNow.AddHours(2);
-                model.LogId = model.Logs.Id;
+                var log = new LogsModel();
+                log.Comment = model.Logs.Comment;
+                log.User = _context.Users.Where(x => x.UserName == model.ModifiedBy).FirstOrDefault();
+                log.Date = DateTime.UtcNow.AddHours(2);
+                model.Logs = log;
+                if(model.LogId == 0)
+                {
+                    model.LogId = model.Logs.Id;
+                }
+                
             }
             
             _context.Incidents.Update(model);
