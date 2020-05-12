@@ -3,90 +3,89 @@
 
 </html>
 
-<h1>SDMan</h1>
-
-
 @if (User.Identity.IsAuthenticated)
 {
     if (User.IsInRole("Administrator"))
 
     {
-            <head>
-                <meta charset="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>@ViewData["Title"] - SDMan</title>
-                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-                <link rel="stylesheet" href="~/css/site.css" />
-            </head>
-            <body>
-                <header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                        <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SDMan</a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Group" asp-action="Index">Group</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Priority" asp-action="Index">Priority</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="GetRoles">Role</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </header>
-                <div class="container">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
+<head class="card-header">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SDMan</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="text-dark bg-light mb-3">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary card-header">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SDMan</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Group" asp-action="Index">Group</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Priority" asp-action="Index">Priority</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Status" asp-action="Index">Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="Register">Create Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="GetRoles">Role</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container ">
+        <main role="main" class="pb-3">
 
-                <footer class="border-top footer text-muted">
-                    <div class="container">
-                        &copy; 2020 - SDMan - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </div>
-                </footer>
-                <script src="~/lib/jquery/dist/jquery.min.js"></script>
-                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-                <script src="~/js/site.js" asp-append-version="true"></script>
-                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-                <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-                <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+            @RenderBody()
+        </main>
+    </div>
 
-                @RenderSection("Scripts", required: false)
-            </body>
+    <footer class="border-top footer text-muted bg-primary">
+        <div class="container">
+            &copy; 2020 - SDMan - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <link href="https://bootswatch.com/4/pulse/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
         }
         if (User.IsInRole("IT"))
         {
@@ -97,9 +96,10 @@
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
                 <link rel="stylesheet" href="~/css/site.css" />
             </head>
-            <body>
+            <body class="text-dark bg-light mb-3">
                 <header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary card-header">
                         <div class="container">
                             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SDMan</a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -109,19 +109,19 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="GroupIncidents">My Group Incidents</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="GroupIncidents">My Group Incidents</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
                                     </li>
 
                                 </ul>
@@ -135,11 +135,12 @@
                     </main>
                 </div>
 
-                <footer class="border-top footer text-muted">
+                <footer class="border-top footer text-muted bg-primary">
                     <div class="container">
                         &copy; 2020 - SDMan - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </div>
                 </footer>
+                <link href="https://bootswatch.com/4/pulse/bootstrap.min.css" rel="stylesheet" type="text/css">
                 <script src="~/lib/jquery/dist/jquery.min.js"></script>
                 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
                 <script src="~/js/site.js" asp-append-version="true"></script>
@@ -159,9 +160,9 @@
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
                 <link rel="stylesheet" href="~/css/site.css" />
             </head>
-            <body>
+            <body class="text-dark bg-light mb-3">
                 <header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary card-header">
                         <div class="container">
                             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SDMan</a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -171,16 +172,16 @@
                             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                                 <ul class="navbar-nav flex-grow-1">
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="Index">My Created Incidents</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Incident" asp-action="MyIncidents">MyIncidents</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
                                     </li>
 
                                 </ul>
@@ -194,11 +195,12 @@
                     </main>
                 </div>
 
-                <footer class="border-top footer text-muted">
+                <footer class="border-top footer text-muted bg-primary">
                     <div class="container">
                         &copy; 2020 - SDMan - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </div>
                 </footer>
+                <link href="https://bootswatch.com/4/pulse/bootstrap.min.css" rel="stylesheet" type="text/css">
                 <script src="~/lib/jquery/dist/jquery.min.js"></script>
                 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
                 <script src="~/js/site.js" asp-append-version="true"></script>
@@ -212,7 +214,7 @@
     }
     else
     { 
-        <div>Użytkownik Niezalogowany.</div>
+        
         <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -220,9 +222,9 @@
             <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
             <link rel="stylesheet" href="~/css/site.css" />
         </head>
-        <body>
+        <body class="text-dark bg-light mb-3">
             <header>
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-primary card-header">
                     <div class="container">
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SDMan</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -230,35 +232,29 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                            <ul class="navbar-nav flex-grow-1">
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>
-                                </li>
-
-                            </ul>
+                          
                         </div>
                     </div>
                 </nav>
             </header>
-            <div class="container">
+            <div class="container align-middle">
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>
             </div>
 
-            <footer class="border-top footer text-muted">
+            <footer class="border-top footer text-muted bg-primary">
                 <div class="container">
                     &copy; 2020 - SDMan - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </div>
             </footer>
+            <link href="https://bootswatch.com/4/pulse/bootstrap.min.css" rel="stylesheet" type="text/css">
             <script src="~/lib/jquery/dist/jquery.min.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
             <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
             <script src="//code.jquery.com/jquery-1.10.2.js"></script>
             <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
             @RenderSection("Scripts", required: false)
         </body>
     }
