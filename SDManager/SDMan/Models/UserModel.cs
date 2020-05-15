@@ -14,8 +14,8 @@ namespace SDMan.Models
         public string LastName { get; set; }
         public DateTime Created { get; set; }
         public IdentityRole Role { get; set; }
-        public int? GroupId { get; set; }
-        public GroupModel? Group { get; set; }
+       // public int? GroupId { get; set; }
+        //public GroupModel? Group { get; set; }
         
 
     }

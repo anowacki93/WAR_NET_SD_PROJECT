@@ -49,7 +49,7 @@ namespace SDMan.Controllers
                 return View(model);
             }
         }
-        public IActionResult Remove(int id)
+        public IActionResult Delete(int id)
         {
             return View(_modelService.Get(id));
         }

@@ -10,7 +10,7 @@ using SDMan.Context;
 namespace SDMan.Migrations
 {
     [DbContext(typeof(SDManDbContext))]
-    [Migration("20200508072934_initial")]
+    [Migration("20200515153513_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,21 +200,6 @@ namespace SDMan.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("SDMan.Models.GroupModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Groups");
-                });
-
             modelBuilder.Entity("SDMan.Models.IncidentModel", b =>
                 {
                     b.Property<int>("Id")
@@ -376,9 +361,6 @@ namespace SDMan.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -419,8 +401,6 @@ namespace SDMan.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -524,10 +504,6 @@ namespace SDMan.Migrations
 
             modelBuilder.Entity("SDMan.Models.UserModel", b =>
                 {
-                    b.HasOne("SDMan.Models.GroupModel", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");

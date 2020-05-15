@@ -38,7 +38,7 @@ namespace PlanFood.Mvc.Context
         public IActionResult Register()
         {
             RegisterViewModel model = new RegisterViewModel();
-            model.ListGroup = new SelectList(_context.Groups.Select(x => x.Name).ToList(),model.Groupname);
+            //model.ListGroup = new SelectList(_context.Groups.Select(x => x.Name).ToList(),model.Groupname);
             return View(model);
         }
 
@@ -172,7 +172,7 @@ namespace PlanFood.Mvc.Context
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ListRoles");
+                    return RedirectToAction("GetRoles");
                 }
 
                 foreach (var error in result.Errors)

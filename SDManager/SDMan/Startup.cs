@@ -34,7 +34,7 @@ namespace SDMan
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SDManDbContext>(builder =>
-            {
+           {
                 builder.UseSqlServer(Configuration["DefaultConnection"]);
             });
 
@@ -43,7 +43,6 @@ namespace SDMan
             services.AddIdentity<UserModel, IdentityRole<int>>().AddEntityFrameworkStores<SDManDbContext>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IPriorityService, PriorityService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<IIncidentService, IncidentService>();
