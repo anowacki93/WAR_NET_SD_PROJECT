@@ -22,32 +22,26 @@ namespace SDMan.Services
 
             return _context.SaveChanges() > 0;
         }
-
         public DepartmentModel Get(int id)
         {
             return _context.Departments.SingleOrDefault(b => b.Id == id);
         }
-
         public IList<DepartmentModel> GetAll()
         {
             return _context.Departments.ToList();
         }
-
         public bool Update(DepartmentModel model)
         {
             _context.Departments.Update(model);
             return _context.SaveChanges() > 0;
         }
-
         public bool Delete(int id)
         {
             var model = _context.Departments.SingleOrDefault(b => b.Id == id);
             if (model == null)
                 return false;
-
             _context.Departments.Remove(model);
             return _context.SaveChanges() > 0;
         }
-
     }
 }

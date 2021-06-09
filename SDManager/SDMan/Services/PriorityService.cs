@@ -22,23 +22,19 @@ namespace SDMan.Services
 
             return _context.SaveChanges() > 0;
         }
-
         public PriorityModel Get(int id)
         {
             return _context.Priorities.SingleOrDefault(b => b.Id == id);
         }
-
         public IList<PriorityModel> GetAll()
         {
             return _context.Priorities.ToList();
         }
-
         public bool Update(PriorityModel model)
         {
             _context.Priorities.Update(model);
             return _context.SaveChanges() > 0;
         }
-
         public bool Delete(int id)
         {
             var model = _context.Priorities.SingleOrDefault(b => b.Id == id);

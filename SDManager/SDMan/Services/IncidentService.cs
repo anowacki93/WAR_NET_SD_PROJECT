@@ -32,29 +32,24 @@ namespace SDMan.Services
             _context.Incidents.Add(incidentModel);
             return _context.SaveChanges() > 0;
         }
-
         public IncidentModel Get(int id)
         {
             return _context.Incidents.SingleOrDefault(b => b.Id == id);
         }
-
         public IList<IncidentModel> GetAll()
         {
             return _context.Incidents.ToList();
         }
-
         public bool Update(IncidentModel model)
         {
             _context.Incidents.Update(model);
             return _context.SaveChanges() > 0;
         }
-
         public bool Delete(int id)
         {
             var model = _context.Incidents.SingleOrDefault(b => b.Id == id);
             if (model == null)
                 return false;
-
             _context.Incidents.Remove(model);
             return _context.SaveChanges() > 0;
         }

@@ -29,13 +29,10 @@ namespace SDMan.Models
         public string PriorityName { get; set; }
         public PriorityModel Priority { get; set; }
         [NotMapped]
-
         public SelectList? ListPriorities { get; set; }
         [NotMapped]
-
         public SelectList? ListCategories { get; set; }
         [NotMapped]
-
         public SelectList? ListDepartments { get; set; }
 
     }

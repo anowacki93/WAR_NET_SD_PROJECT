@@ -46,7 +46,6 @@ namespace SDMan.Controllers
             //model.ListPriorities = _priorityService.GetAll().ToList();
             return View(model);
         }
-      
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]IncidentModel model) //[FromForm] - potrzebne do mapowania danych z formularza na obiekt w przypadku gdy korzystamy z Razora lub zwykłego HTMLa. Przy taghelperach nie jest to konieczne tak jak w tym przypadku
         {

@@ -17,37 +17,29 @@ namespace SDMan.Services
         }
         public bool Create(GroupModel model)
         {
-
             _context.Groups.Add(model);
-
             return _context.SaveChanges() > 0;
         }
-
         public GroupModel Get(int id)
         {
             return _context.Groups.SingleOrDefault(b => b.Id == id);
         }
-
         public IList<GroupModel> GetAll()
         {
             return _context.Groups.ToList();
         }
-
         public bool Update(GroupModel model)
         {
             _context.Groups.Update(model);
             return _context.SaveChanges() > 0;
         }
-
         public bool Delete(int id)
         {
             var model = _context.Groups.SingleOrDefault(b => b.Id == id);
             if (model == null)
                 return false;
-
             _context.Groups.Remove(model);
             return _context.SaveChanges() > 0;
         }
-
     }
 }

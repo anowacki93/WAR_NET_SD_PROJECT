@@ -39,7 +39,6 @@ namespace SDMan.Controllers
                 try
                 {
                     //model.UserId = User.Identity.Name;
-
                     _modelService.Create(model);
                     //context.SaveChanges();
                 }
@@ -82,7 +81,6 @@ namespace SDMan.Controllers
         {
             try
             {
-
                 _modelService.Update(model);
             }
             catch (Exception e)

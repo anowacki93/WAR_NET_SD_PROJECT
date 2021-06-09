@@ -22,23 +22,19 @@ namespace SDMan.Services
 
             return _context.SaveChanges() > 0;
         }
-
         public CategoryModel Get(int id)
         {
             return _context.Categories.SingleOrDefault(b => b.Id == id);
         }
-
         public IList<CategoryModel> GetAll()
         {
             return _context.Categories.ToList();
         }
-
         public bool Update(CategoryModel model)
         {
             _context.Categories.Update(model);
             return _context.SaveChanges() > 0;
         }
-
         public bool Delete(int id)
         {
             var model = _context.Categories.SingleOrDefault(b => b.Id == id);
@@ -47,7 +43,6 @@ namespace SDMan.Services
 
             _context.Categories.Remove(model);
             return _context.SaveChanges() > 0;
-        }
-        
+        }     
     }
 }

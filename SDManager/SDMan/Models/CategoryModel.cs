@@ -10,6 +10,5 @@ namespace SDMan.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<IncidentModel> Incidents { get; set; }
-        
     }
 }

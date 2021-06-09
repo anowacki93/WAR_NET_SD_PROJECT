@@ -28,12 +28,9 @@ namespace SDMan.Controllers
         }
         public IActionResult Create()
         {
-
             CategoryModel model = new CategoryModel();
-            
             return View(model);
         }
-
         [HttpPost]
         public IActionResult Create([FromForm]CategoryModel model) //[FromForm] - potrzebne do mapowania danych z formularza na obiekt w przypadku gdy korzystamy z Razora lub zwykłego HTMLa. Przy taghelperach nie jest to konieczne tak jak w tym przypadku
         {

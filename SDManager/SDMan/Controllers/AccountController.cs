@@ -16,31 +16,23 @@ namespace PlanFood.Mvc.Context
         private readonly UserManager<UserModel> userManager;
         private readonly RoleManager<IdentityRole<int>> roleManager;
         //private readonly UserModel userModel;
-
-
         public AccountController(SignInManager<UserModel> _signInManager,
             UserManager<UserModel> _userManager,RoleManager<IdentityRole<int>> _roleManager)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
-
-
-
-        }
-       
+        }  
         public IActionResult Index()
         {
 
             return View();
         }
-
         public IActionResult Register()
         {
 
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
@@ -51,17 +43,12 @@ namespace PlanFood.Mvc.Context
             //};
             //await roleManager.CreateAsync(identity);
             //var admin = new UserModel { UserName = "Administrator" };
-
             //await userManager.CreateAsync(admin, "Administrator");
             //await userManager.AddToRoleAsync(admin, "Administrator");
-
             if (ModelState.IsValid)
             {
-                
                 var user = new UserModel { UserName = viewModel.UserName,Email=viewModel.UserName, FirstName=viewModel.FirstName,LastName=viewModel.LastName};
-                
                 var result = await userManager.CreateAsync(user, viewModel.Password);
-                
                 if (result.Succeeded)
                 {
                     var login = await signInManager.PasswordSignInAsync(viewModel.Email,
@@ -82,16 +69,13 @@ namespace PlanFood.Mvc.Context
             }
             return View(viewModel);
         }
-
         public IActionResult LogIn()
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
-
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(viewModel.UserName,
@@ -113,7 +97,6 @@ namespace PlanFood.Mvc.Context
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
         [HttpGet]
         public IActionResult CreateRole()
         {
@@ -134,7 +117,6 @@ namespace PlanFood.Mvc.Context
                     return RedirectToAction("index","Home");
                 }
             }
-            
             return View();
         }
         [HttpGet]
@@ -143,6 +125,5 @@ namespace PlanFood.Mvc.Context
             var roles = roleManager.Roles;
             return View(roles);
         }
-
     }
 }
